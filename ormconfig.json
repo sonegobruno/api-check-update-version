@@ -5,6 +5,7 @@
     "username": "check_version",
     "password": "123123",
     "database": "check-version",
+    "entities": ["./src/modules/app/entities/*.ts"],
     "migrations": ["./src/database/migrations/*.ts"],
     "cli": {
         "migrationsDir": "./src/database/migrations"
