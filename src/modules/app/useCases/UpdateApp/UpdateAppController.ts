@@ -8,11 +8,7 @@ export class UpdateAppController {
 
         const updateAppService = container.resolve(UpdateAppUseCase);
 
-        try {
-            await updateAppService.execute(body);
-            return response.json({ message: 'Sucesso ao atualizar App'});
-        } catch (err) {
-            return response.status(err.statusCode).json({ message: err.message});
-        }
+        await updateAppService.execute(body);
+        return response.json({ message: 'Sucesso ao atualizar App'});
     }
 }

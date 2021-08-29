@@ -8,11 +8,7 @@ export class RemoveAppByIdController {
 
         const deleteAppService = container.resolve(RemoveAppByIdUseCase);
 
-        try {
-            await deleteAppService.execute({id: id as string});
-            return response.json({ message: 'Sucesso ao excluir App'});
-        } catch (err) {
-            return response.status(err.statusCode).json({ message: err.message});
-        }
+        await deleteAppService.execute({id: id as string});
+        return response.json({ message: 'Sucesso ao excluir App'});
     }
 }

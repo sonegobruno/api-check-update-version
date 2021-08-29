@@ -30,11 +30,7 @@ class CreateAppUseCase {
             throw new AppError('Versão IOS não informado')
         }
 
-        try {
-            await this.appRepository.create({nome, versao_android, versao_ios});
-        } catch(err) {
-            throw new AppError('Erro ao realizar cadastro', 500)
-        }
+        await this.appRepository.create({nome, versao_android, versao_ios});
     }
 }
 

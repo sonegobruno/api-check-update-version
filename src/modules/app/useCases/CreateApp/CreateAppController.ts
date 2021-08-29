@@ -8,11 +8,7 @@ export class CreateAppController {
 
         const createAppUseCase = container.resolve(CreateAppUseCase);
 
-        try {
-            await createAppUseCase.execute(body);
-            return response.json({ message: 'Sucesso ao realizar cadastro'});
-        } catch (err) {
-            return response.status(err.statusCode).json({ message: err.message});
-        }
+        await createAppUseCase.execute(body);
+        return response.json({ message: 'Sucesso ao realizar cadastro'});
     }
 }

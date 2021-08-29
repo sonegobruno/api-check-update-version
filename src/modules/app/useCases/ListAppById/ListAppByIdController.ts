@@ -8,11 +8,7 @@ export class ListAppByIdController {
 
         const listAppById = container.resolve(ListAppByIdUseCase);
 
-        try {
-            const app = await listAppById.execute({id: id as string});
-            return response.json(app);
-        } catch (err) {
-            return response.status(err.statusCode).json({ message: err.message});
-        }
+        const app = await listAppById.execute({id: id as string});
+        return response.json(app);
     }
 }

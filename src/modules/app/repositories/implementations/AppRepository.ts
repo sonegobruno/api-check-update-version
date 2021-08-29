@@ -3,16 +3,11 @@
 // Importa o arquivo de conexão com o banco de dados
 // ------------------------------------------------------
 import { App } from '../../entities/App';
-import { ICreateAppDTO, IUpdateAppDTO } from '../AppDTO';
+import { IAppRepository } from '../IAppRepository';
 import { AppError } from '../../../../errors';
 import { getRepository, Repository } from 'typeorm';
-
-export interface IAppRepository {
-    findById: (id: string) => Promise<App>;
-    delete: (id: string) => Promise<void>;
-    create: (body: ICreateAppDTO) => Promise<void>;
-    update: (body: IUpdateAppDTO) => Promise<void>;
-}
+import { ICreateAppDTO } from '../../dtos/ICreateAppDTO';
+import { IUpdateAppDTO } from '../../dtos/IUpdateAppDTO';
 
 class AppRepository implements IAppRepository{
 
@@ -33,7 +28,18 @@ class AppRepository implements IAppRepository{
             await this.repository.save(app);
         } catch(err) {
             console.log(err);
-            throw err;
+            throw new AppError(err);
+        }
+    }
+
+    public async list(): Promise<App[]> {
+        try {
+            const app = await this.repository.find();
+
+            return app;
+        } catch(err) {
+            console.log(err);
+            throw new AppError(err);
         }
     }
 
@@ -45,7 +51,7 @@ class AppRepository implements IAppRepository{
             return app;
         } catch(err) {
             console.log(err);
-            throw new AppError('Erro ao fazer consulta', 500)
+            throw new AppError(err);
         }
     }
 
@@ -54,7 +60,7 @@ class AppRepository implements IAppRepository{
         try {
             await this.repository.delete({ id });
         } catch(err) {
-            throw err;
+            throw new AppError(err);
         } 
     }
 
@@ -68,7 +74,7 @@ class AppRepository implements IAppRepository{
 
         } catch(err) {
             console.log(err);
-            throw err;
+            throw new AppError(err);
         }
     }
 

@@ -35,12 +35,7 @@ class UpdateAppUseCase {
             throw new AppError('Versão IOS não informado')
         }
 
-        try {
-            await this.appRepository.update({ id, nome, versao_android, versao_ios});
-        } catch (err) {
-            throw new AppError('Erro ao atualizar App', 500)
-        }
-
+        await this.appRepository.update({ id, nome, versao_android, versao_ios});
     }
 }
 
