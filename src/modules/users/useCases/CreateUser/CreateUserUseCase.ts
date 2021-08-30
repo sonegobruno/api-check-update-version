@@ -12,7 +12,7 @@ class CreateUserUseCase {
         private userRepository: IUsersRepository
     ){}
 
-    public async execute({nome, email, password}: ICreateUserDTO): Promise<void> {
+    public async execute({ nome, email, password }: ICreateUserDTO): Promise<void> {
 
         if(!nome) {
             throw new AppError('Nome não informado')

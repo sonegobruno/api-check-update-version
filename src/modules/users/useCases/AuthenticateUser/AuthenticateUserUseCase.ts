@@ -25,7 +25,7 @@ class AuthenticateUserUseCase {
         private userRepository: IUsersRepository
     ){}
 
-    public async execute({ email, password} : IRequest): Promise<IResponse> {
+    public async execute({ email, password } : IRequest): Promise<IResponse> {
 
         if(!email) {
             throw new AppError('E-mail não informado')

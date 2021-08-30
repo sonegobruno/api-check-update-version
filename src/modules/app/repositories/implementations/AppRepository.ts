@@ -55,6 +55,17 @@ class AppRepository implements IAppRepository{
         }
     }
 
+    public async findByName(nome: string): Promise<App> {
+        try {
+            const app = await this.repository.findOne({ nome });
+
+            return app;
+        } catch(err) {
+            console.log(err);
+            throw new AppError(err);
+        }
+    }
+
 
     public async delete(id: string): Promise<void> {
         try {

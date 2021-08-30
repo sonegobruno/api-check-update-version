@@ -1,12 +1,7 @@
-import { IAppRepository } from '../../repositories/implementations/AppRepository';
+import { IAppRepository } from '../../repositories/IAppRepository';
 import { AppError } from '../../../../errors';
 import { inject, injectable} from 'tsyringe';
-
-interface Request {
-    nome: string;
-    versao_android: string;
-    versao_ios: string;
-}
+import { ICreateAppDTO } from '../../dtos/ICreateAppDTO';
 
 @injectable()
 class CreateAppUseCase {
@@ -16,18 +11,16 @@ class CreateAppUseCase {
         private appRepository: IAppRepository
     ){}
 
-    public async execute({nome, versao_android, versao_ios}: Request): Promise<void> {
+    public async execute({nome, versao_android, versao_ios}: ICreateAppDTO): Promise<void> {
 
         if(!nome) {
             throw new AppError('Nome não informado')
         }
 
-        if(!versao_android) {
-            throw new AppError('Versão Android não informado')
-        }
+        const appAlreadyExists = await this.appRepository.findByName(nome);
 
-        if(!versao_ios) {
-            throw new AppError('Versão IOS não informado')
+        if(appAlreadyExists) {
+            throw new AppError('App já cadastrado')
         }
 
         await this.appRepository.create({nome, versao_android, versao_ios});
