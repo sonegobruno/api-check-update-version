@@ -16,6 +16,15 @@ export class App {
     @Column()
     versao_ios: string;
 
+    @Column()
+    id_app: string;
+
+    @Column()
+    tecnologia: string;
+
+    @Column()
+    descricao: string;
+
     @CreateDateColumn()
     created_at: Date;
 

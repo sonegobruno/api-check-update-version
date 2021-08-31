@@ -7,6 +7,12 @@ services:
         volumes:
             - .:/usr/app
         network_mode: "host"
+        environment: 
+            - DB_HOST=localhost
+            - DB_USERNAME=postgres
+            - DB_PASSWORD=postgres
+            - DB_PORT=20420
+            - DB_DATABASE=check-version
 
 volumes:
     pgdata:

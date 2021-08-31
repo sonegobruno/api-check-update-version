@@ -1,13 +1,7 @@
-import { IAppRepository } from '../../repositories/implementations/AppRepository';
+import { IAppRepository } from '../../repositories/IAppRepository';
 import { AppError } from '../../../../errors';
 import { inject, injectable} from 'tsyringe';
-
-interface Request {
-    id: string;
-    nome: string;
-    versao_android: string;
-    versao_ios: string;
-}
+import { IUpdateAppDTO } from '../../dtos/IUpdateAppDTO';
 
 @injectable()
 class UpdateAppUseCase {
@@ -17,7 +11,15 @@ class UpdateAppUseCase {
         private appRepository: IAppRepository
     ){}
 
-    public async execute({id, nome, versao_android, versao_ios}: Request): Promise<void> {
+    public async execute({
+        id, 
+        nome, 
+        versao_android, 
+        versao_ios,
+        descricao,
+        id_app,
+        tecnologia
+    }: IUpdateAppDTO): Promise<void> {
 
         if(!id) {
             throw new AppError('ID não informado')
@@ -35,7 +37,23 @@ class UpdateAppUseCase {
             throw new AppError('Versão IOS não informado')
         }
 
-        await this.appRepository.update({ id, nome, versao_android, versao_ios});
+        if(!id_app) {
+            throw new AppError('Versão IOS não informado')
+        }
+
+        if(!tecnologia) {
+            throw new AppError('Versão IOS não informado')
+        }
+
+        await this.appRepository.update({ 
+            id, 
+            nome, 
+            versao_android, 
+            versao_ios,
+            descricao,
+            id_app,
+            tecnologia
+        });
     }
 }
 

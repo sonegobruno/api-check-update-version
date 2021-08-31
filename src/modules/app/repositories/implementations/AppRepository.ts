@@ -17,13 +17,9 @@ class AppRepository implements IAppRepository{
         this.repository = getRepository(App)
     }
 
-    public async create({ nome, versao_android, versao_ios }: ICreateAppDTO): Promise<void> {
+    public async create(body: ICreateAppDTO): Promise<void> {
         try {
-            const app = this.repository.create({
-                nome,
-                versao_android,
-                versao_ios
-            });
+            const app = this.repository.create(body);
 
             await this.repository.save(app);
         } catch(err) {
@@ -55,6 +51,17 @@ class AppRepository implements IAppRepository{
         }
     }
 
+    public async findByPackageId(id_app: string): Promise<App> {
+        try {
+            const app = await this.repository.findOne({ id_app });
+
+            return app;
+        } catch(err) {
+            console.log(err);
+            throw new AppError(err);
+        }
+    }
+
     public async findByName(nome: string): Promise<App> {
         try {
             const app = await this.repository.findOne({ nome });
@@ -75,13 +82,9 @@ class AppRepository implements IAppRepository{
         } 
     }
 
-    public async update({ id, nome, versao_android, versao_ios }: IUpdateAppDTO): Promise<void> {
+    public async update({ id, ...rest }: IUpdateAppDTO): Promise<void> {
         try {
-            await this.repository.update(id, {
-                nome,
-                versao_android,
-                versao_ios
-            });
+            await this.repository.update(id, {...rest});
 
         } catch(err) {
             console.log(err);

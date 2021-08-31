@@ -11,10 +11,25 @@ class CreateAppUseCase {
         private appRepository: IAppRepository
     ){}
 
-    public async execute({nome, versao_android, versao_ios}: ICreateAppDTO): Promise<void> {
+    public async execute({
+        nome, 
+        descricao, 
+        id_app,
+        tecnologia,
+        versao_android, 
+        versao_ios
+    }: ICreateAppDTO): Promise<void> {
 
         if(!nome) {
             throw new AppError('Nome não informado')
+        }
+
+        if(!id_app) {
+            throw new AppError('Id do app não informado')
+        }
+
+        if(!tecnologia) {
+            throw new AppError('Tecnologia não informada')
         }
 
         const appAlreadyExists = await this.appRepository.findByName(nome);
@@ -23,7 +38,14 @@ class CreateAppUseCase {
             throw new AppError('App já cadastrado')
         }
 
-        await this.appRepository.create({nome, versao_android, versao_ios});
+        await this.appRepository.create({
+            nome,
+            descricao,
+            id_app,
+            tecnologia,
+            versao_android, 
+            versao_ios
+        });
     }
 }
 

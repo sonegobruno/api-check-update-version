@@ -4,12 +4,12 @@ import { CreateAppUseCase } from "./CreateAppUseCase";
 
 export class CreateAppController {
     async handle(request: Request, response: Response) {
-        const { nome } = request.body;
+        const { body } = request;
 
         const createAppUseCase = container.resolve(CreateAppUseCase);
 
         await createAppUseCase.execute({
-            nome,
+            ...body,
             versao_android: '0.0.0',
             versao_ios: '0.0.0'
         });

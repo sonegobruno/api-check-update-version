@@ -25,6 +25,19 @@ export class CreateApps1629560640664 implements MigrationInterface {
                         type: "varchar"
                     },
                     {
+                        name: "id_app",
+                        type: "varchar",
+                        isUnique: true
+                    },
+                    {
+                        name: "tecnologia",
+                        type: "varchar"
+                    },
+                    {
+                        name: "descricao",
+                        type: "varchar"
+                    },
+                    {
                         name: "created_at",
                         type: "timestamp",
                         default: "now()"
